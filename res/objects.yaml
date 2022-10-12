@@ -1,0 +1,298 @@
+objects:
+  # J2000 orbital elements from https://ssd.jpl.nasa.gov/planets/approx_pos.html#tables
+  # a : semi-major axis (meters)
+  # e : eccentricity (radians)
+  # I : inclination to the ecliptic (degrees)
+  # L : mean longitude (degrees)
+  # w : longitude of perihelion (degrees)
+  # W : longitude of the ascending node (degrees)
+  sun:
+    j2000:
+      a:
+        value: 0
+        rate: 0
+      e:
+        value: 0
+        rate: 0
+      I:
+        value: 0
+        rate: 0
+      L:
+        value: 0
+        rate: 0
+      w:
+        value: 0
+        rate: 0
+      W:
+        value: 0
+        rate: 0
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 1988500e24
+      diameter: 1392684e3
+      color: [238, 207, 1]
+  mercury:
+    j2000:
+      a:
+        value: 0.38709927
+        rate: 0.00000037
+      e:
+        value: 0.20563593
+        rate: 0.00001906
+      I:
+        value: 7.00497902
+        rate: -0.00594749
+      L:
+        value: 252.25032350
+        rate: 149472.67411175
+      w:
+        value: 77.45779628
+        rate: 0.16047689
+      W:
+        value: 48.33076593
+        rate: -0.12534081
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 0.33010e24
+      diameter: 4879e3
+      color: [173, 168, 165]
+  venus:
+    j2000:
+      a:
+        value: 0.72333566
+        rate: 0.00000390
+      e:
+        value: 0.00677672
+        rate: -0.00004107
+      I:
+        value: 3.39467605
+        rate: -0.00078890
+      L:
+        value: 181.97909950
+        rate: 58517.81538729
+      w:
+        value: 131.60246718
+        rate: 0.00268329
+      W:
+        value: 76.67984255
+        rate: -0.27769418
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 4.8673e24
+      diameter: 12104e3
+      color: [227,158,28]
+  earth:
+    j2000:
+      a:
+        value: 1.00000261
+        rate: 0.00000562
+      e:
+        value: 0.01671123
+        rate: -0.00004392
+      I:
+        value: -0.00001531
+        rate: -0.01294668
+      L:
+        value: 100.46457166
+        rate: 35999.37244981
+      w:
+        value: 102.93768193
+        rate: 0.32327364
+      W:
+        value: 0.0
+        rate: 0.0
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 5.9722e24
+      diameter: 12756e3
+      color: [0,0,255]
+  mars:
+    j2000:
+      a:
+        value: 1.52371034
+        rate: 0.00001847
+      e:
+        value: 0.09339410
+        rate: 0.00007882
+      I:
+        value: 1.84969142
+        rate: -0.00813131
+      L:
+        value: -4.55343205
+        rate: 19140.30268499
+      w:
+        value: -23.94362959
+        rate: 0.44441088
+      W:
+        value: 49.55953891
+        rate: -0.29257343
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 0.64169e24
+      diameter: 6792e3
+      color: [231,125,17]
+  jupiter:
+    j2000:
+      a:
+        value: 5.20288700
+        rate: -0.00011607
+      e:
+        value: 0.04838624
+        rate: -0.00013253
+      I:
+        value: 1.30439695
+        rate: -0.00183714
+      L:
+        value: 34.39644051
+        rate: 3034.74612775
+      w:
+        value: 14.72847983
+        rate: 0.21252668
+      W:
+        value: 100.47390909
+        rate: 0.20469106
+      daily_motion:
+        b: 0 # -0.00012452
+        c: 0 # 0.06064060
+        s: 0 # -0.35635438
+        f: 0 # 38.35125000
+    body:
+      mass: 1898.13e24
+      diameter: 142984e3
+      color: [209,167,127]
+  saturn:
+    j2000:
+      a:
+        value: 9.53667594
+        rate: -0.00125060
+      e:
+        value: 0.05386179
+        rate: -0.00050991
+      I:
+        value: 2.48599187
+        rate: 0.00193609
+      L:
+        value: 49.95424423
+        rate: 1222.49362201
+      w:
+        value: 92.59887831
+        rate: -0.41897216
+      W:
+        value: 113.66242448
+        rate: -0.28867794
+      daily_motion:
+        b: 0 # 0.00025899
+        c: 0 # -0.13434469
+        s: 0 # 0.87320147
+        f: 0 # 38.35125000
+    body:
+      mass: 568.32e24
+      diameter: 120536e3
+      color: [237,219,173]
+  uranus:
+    j2000:
+      a:
+        value: 19.18916464
+        rate: -0.00196176
+      e:
+        value: 0.04725744
+        rate: -0.00004397
+      I:
+        value: 0.77263783
+        rate: -0.00242939
+      L:
+        value: 313.23810451
+        rate: 428.48202785
+      w:
+        value: 170.95427630
+        rate: 0.40805281
+      W:
+        value: 74.01692503
+        rate: 0.04240589
+      daily_motion:
+        b: 0 # 0.00058331
+        c: 0 # -0.97731848
+        s: 0 # 0.17689245
+        f: 0 # 7.67025000
+    body:
+      mass: 86.811e24
+      diameter: 51118e3
+      color: [98,174,231]
+  neptune:
+    j2000:
+      a:
+        value: 30.06992276
+        rate: 0.00026291
+      e:
+        value: 0.00859048
+        rate: 0.00005105
+      I:
+        value: 1.77004347
+        rate: 0.00035372
+      L:
+        value: -55.12002969
+        rate: 218.45945325
+      w:
+        value: 44.96476227
+        rate: -0.32241464
+      W:
+        value: 131.78422574
+        rate: -0.00508664
+      daily_motion:
+        b: 0 # -0.00041348
+        c: 0 # 0.68346318
+        s: 0 # -0.10162547
+        f: 0 # 7.67025000
+    body:
+      mass: 102.409e24
+      diameter: 49528e3
+      color: [61,94,249]
+  pluto:
+    j2000:
+      a:
+        value: 39.56239552
+        rate: -0.04203972
+      e:
+        value: 0.24987306
+        rate: -0.00184232
+      I:
+        value: 17.14028904
+        rate: 0.00007627
+      L:
+        value: 239.12172058
+        rate: 144.67315634
+      w:
+        value: -135.89920307
+        rate: 0.26000367
+      W:
+        value: 110.30689371
+        rate: 0.00513511
+      daily_motion:
+        b: 0
+        c: 0
+        s: 0
+        f: 0
+    body:
+      mass: 0.01303e24
+      diameter: 2376e3
+      color: [229,107,106]
