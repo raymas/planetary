@@ -1,0 +1,95 @@
+name: Build artifacts
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build (${{ matrix.label }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: linux
+            rust-target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            label: macos-aarch64
+            rust-target: aarch64-apple-darwin
+          - os: macos-latest
+            label: macos-x86_64
+            rust-target: x86_64-apple-darwin
+            tauri-args: --target x86_64-apple-darwin
+            cspice-distdir: MacIntel_OSX_AppleC_64bit
+          - os: windows-latest
+            label: windows
+            rust-target: x86_64-pc-windows-msvc
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app
+
+      - name: Install Tauri system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+          # AppImage tooling needs FUSE; the package was renamed on 24.04.
+          sudo apt-get install -y libfuse2 || sudo apt-get install -y libfuse2t64
+
+      # spice/ is gitignored; the bundler compiles CSPICE from this source.
+      # fetch_cspice.sh picks the NAIF distribution matching the host; the
+      # x86_64 macOS build cross-compiles from an arm64 host, so pin the
+      # Intel distribution there via CSPICE_DISTDIR.
+      - name: Download CSPICE source
+        shell: bash
+        env:
+          CSPICE_DISTDIR: ${{ matrix.cspice-distdir }}
+        run: ./scripts/fetch_cspice.sh
+
+      - name: Restore SPICE kernel cache
+        uses: actions/cache@v4
+        with:
+          path: kernels
+          key: spice-kernels-${{ hashFiles('scripts/fetch_kernels.sh') }}
+
+      - name: Fetch SPICE kernels
+        shell: bash
+        run: ./scripts/fetch_kernels.sh
+
+      - name: Install frontend dependencies
+        working-directory: app/ui
+        run: npm ci
+
+      - name: Build Tauri bundle
+        working-directory: app
+        shell: bash
+        run: npm run tauri build -- ${{ matrix.tauri-args }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: planetary-transfer-${{ matrix.label }}
+          if-no-files-found: error
+          path: |
+            app/src-tauri/target/**/bundle/deb/*.deb
+            app/src-tauri/target/**/bundle/rpm/*.rpm
+            app/src-tauri/target/**/bundle/appimage/*.AppImage
+            app/src-tauri/target/**/bundle/dmg/*.dmg
+            app/src-tauri/target/**/bundle/nsis/*.exe
+            app/src-tauri/target/**/bundle/msi/*.msi
