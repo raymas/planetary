@@ -30,10 +30,13 @@ class Interplanetary:
                 )
 
     def simulate(self, timesteps_range):
+        print(f"Interplanetary try acquires {self.realtime_lock}")
         self.realtime_lock.acquire()
+        print(f"Interplanetary acquires {self.realtime_lock}")
         for planet in self.planets:
             planet.compute_orbit(timesteps_range)
         self.realtime_lock.release()
+        print("Interplanetary release")
 
     def run(self, step_size=-1):
         self.shouldRun = True

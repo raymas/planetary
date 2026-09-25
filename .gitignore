@@ -4,3 +4,8 @@ spice
 .pytest_cache
 *.pdf
 doc
+kernels
+app/ui/node_modules
+app/ui/dist
+app/src-tauri/target
+app/target

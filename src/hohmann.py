@@ -1,9 +1,11 @@
 from numbers import Number
+import datetime
 import numpy as np
 from src.celestial_body import Body, Spacecraft
 from src.timeframe import TimeFrame 
 
 # http://www.projectrho.com/public_html/rocket/mission.php#id--Hohmann_Transfer_Orbits
+# http://www.phy6.org/stargaze/Smap.htm
 
 class Hohmann:
     def __init__(self) -> None:
@@ -48,10 +50,15 @@ class Hohmann:
         T = .5 * np.sqrt(2 * np.pi * np.pi * sma * sma * sma / µp)
 
         # window size in second 
-        # w = 
+        wref = 2 * np.pi * np.sqrt(pow(rord, 3) / µp)
+        wtar = 2 * np.pi * np.sqrt(pow(tord, 3) / µp)
+        w = 1 / ((1 / wref) - (1 / wtar))
+        wt = datetime.datetime.now() + datetime.timedelta(seconds=w)
+        
+        alpha = np.pi * (1 - ((1/(2*np.sqrt(2))) * np.sqrt(pow(rord/tord + 1, 3))))
 
         return {
             "dV": dV,
             "T": T,
-            "w": 0
+            "w": wt
         }

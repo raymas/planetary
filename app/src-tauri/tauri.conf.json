@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Planetary Transfer",
+  "version": "0.1.0",
+  "identifier": "com.planetarytransfer.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../ui/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Planetary Transfer",
+        "width": 1360,
+        "height": 860,
+        "minWidth": 700,
+        "minHeight": 500
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Science",
+    "shortDescription": "Solar-system ephemeris viewer",
+    "longDescription": "Planet positions at any date from 1849 to 2150, computed with JPL SPICE ephemeris data.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": {
+      "../../kernels/de440s.bsp": "kernels/de440s.bsp",
+      "../../kernels/gm_de431.tpc": "kernels/gm_de431.tpc",
+      "../../kernels/jup365.bsp": "kernels/jup365.bsp",
+      "../../kernels/mar099s.bsp": "kernels/mar099s.bsp",
+      "../../kernels/naif0012.tls": "kernels/naif0012.tls",
+      "../../kernels/nep097.bsp": "kernels/nep097.bsp",
+      "../../kernels/pck00011.tpc": "kernels/pck00011.tpc",
+      "../../kernels/plu060.bsp": "kernels/plu060.bsp",
+      "../../kernels/sat441.bsp": "kernels/sat441.bsp",
+      "../../kernels/ura184_part-3.bsp": "kernels/ura184_part-3.bsp"
+    }
+  }
+}

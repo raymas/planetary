@@ -1,0 +1,25 @@
+[package]
+name = "planetary-transfer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Cross-platform solar-system ephemeris viewer"
+default-run = "planetary-transfer"
+
+[lib]
+name = "planetary_transfer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ephemeris = { path = "../crates/ephemeris" }
+
+# Android ships its kernels inside the APK asset archive; they are
+# extracted to the app data dir on first launch.
+[target.'cfg(target_os = "android")'.dependencies]
+zip = "4"

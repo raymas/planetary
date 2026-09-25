@@ -1,0 +1,374 @@
+/* Dear ImGui-style grayscale theme: flat windows, thin gray borders,
+   no rounding, compact controls. Palette from ImGui's default dark
+   style: WindowBg #0F0F0F, FrameBg #292929, Button #424242, Border
+   #6E6E6E at 50%, Text #E6E6E6, TextDisabled #808080. */
+:root {
+  color-scheme: dark;
+  --bg: #0f0f0f;
+  --column: #121212;
+  --title: #161616;
+  --panel-border: #3f3f3f;
+  --text: #e0e0e0;
+  --muted: #8f8f8f;
+  --frame: #292929;
+  --frame-hover: #333333;
+  --frame-active: #3d3d3d;
+  --button: #424242;
+  --button-hover: #4f4f4f;
+  --button-active: #5c5c5c;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #4f4f4f;
+  color: var(--text);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--column);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border: 1px solid var(--column);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 270px 1fr 310px;
+  height: 100vh;
+}
+
+.panel-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  overflow-y: auto;
+  background: var(--column);
+  border-color: var(--panel-border);
+}
+
+#left {
+  border-right: 1px solid var(--panel-border);
+}
+
+#right {
+  border-left: 1px solid var(--panel-border);
+}
+
+/* ImGui-style window: flat, 1px border, title-bar strip on top. */
+.panel {
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0;
+  padding: 8px 10px 10px;
+}
+
+.panel h2 {
+  margin: -8px -10px 8px;
+  padding: 4px 10px;
+  background: var(--title);
+  border-bottom: 1px solid var(--panel-border);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.row label {
+  color: var(--muted);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 6px 0 0;
+}
+
+.error {
+  color: #f0f0f0;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+input[type="datetime-local"],
+input[type="number"],
+select {
+  background: var(--frame);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 0;
+  padding: 4px 6px;
+  font: inherit;
+  flex: 1;
+  min-width: 0;
+}
+
+input[type="datetime-local"]:hover,
+input[type="number"]:hover,
+select:hover {
+  background: var(--frame-hover);
+}
+
+input[type="datetime-local"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: #6e6e6e;
+  background: var(--frame-active);
+}
+
+input[type="checkbox"] {
+  accent-color: #c8c8c8;
+}
+
+button {
+  background: var(--button);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 0;
+  padding: 4px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--button-hover);
+}
+
+button:active {
+  background: var(--button-active);
+}
+
+button:focus-visible {
+  outline: 1px solid #6e6e6e;
+  outline-offset: -1px;
+}
+
+#btn-play {
+  width: 42px;
+}
+
+#viewport {
+  position: relative;
+  min-width: 0;
+}
+
+#scene-container {
+  position: absolute;
+  inset: 0;
+}
+
+#scene-container canvas {
+  display: block;
+}
+
+/* DOM planet-name labels, positioned by CSS2DRenderer. The overlay
+   container keeps pointer-events: none; labels re-enable it so they are
+   clickable without blocking orbit controls elsewhere. */
+.planet-label {
+  background: rgba(15, 15, 15, 0.65);
+  border: 1px solid rgba(110, 110, 110, 0.4);
+  padding: 1px 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+#scene-error {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(18, 18, 18, 0.92);
+  border: 1px solid #6e6e6e;
+  padding: 8px 12px;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#sim-utc {
+  font-variant-numeric: tabular-nums;
+}
+
+#body-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#body-list li {
+  margin: 2px 0;
+}
+
+#body-list li.moon label {
+  padding-left: 18px;
+}
+
+#body-list li.moon .swatch {
+  width: 7px;
+  height: 7px;
+}
+
+#body-list label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#inspector h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+#inspector table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#inspector th,
+#inspector td {
+  text-align: left;
+  padding: 3px 4px;
+  vertical-align: top;
+  font-weight: normal;
+}
+
+#inspector th {
+  color: var(--muted);
+  width: 55%;
+}
+
+#inspector td {
+  font-variant-numeric: tabular-nums;
+}
+
+#transfer-results h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+#transfer-results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#transfer-results th,
+#transfer-results td {
+  text-align: left;
+  padding: 3px 4px;
+  vertical-align: top;
+  font-weight: normal;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+#transfer-results th {
+  color: var(--muted);
+  width: 55%;
+}
+
+#transfer-results td {
+  font-variant-numeric: tabular-nums;
+}
+
+#mobile-toggles {
+  display: none;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#mobile-toggles button {
+  pointer-events: auto;
+}
+
+@media (max-width: 900px) {
+  :root {
+    /* Drawer width on small screens: tweak this one value to shrink or
+       grow the overlay panels. */
+    --drawer-max: 260px;
+  }
+
+  #app {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-column {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: min(85vw, var(--drawer-max));
+    z-index: 20;
+    transition: transform 0.2s ease;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  }
+
+  #left {
+    left: 0;
+    transform: translateX(-105%);
+  }
+
+  #right {
+    right: 0;
+    transform: translateX(105%);
+  }
+
+  #left.open,
+  #right.open {
+    transform: translateX(0);
+  }
+
+  #mobile-toggles {
+    display: flex;
+  }
+}

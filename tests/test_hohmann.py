@@ -23,4 +23,4 @@ def test_terra_mars():
 
     comp = h.transfer_planetary(earth, mars, s, 75e3, t)
 
-    assert comp["dv"] == 5684
+    assert comp["dV"] == 5684

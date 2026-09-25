@@ -3,7 +3,7 @@ import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 
-from pyqtgraph.Qt import QtGui, QtCore
+from pyqtgraph.Qt import QtGui, QtCore, QtWidgets
 
 from src.celestial_body import Body
 
@@ -12,7 +12,7 @@ class Visualizer:
     scale = 1 / 1e6
 
     def __init__(self) -> None:
-        self.app = QtGui.QApplication(sys.argv)
+        self.app = QtWidgets.QApplication(sys.argv)
         self.w = gl.GLViewWidget()
         self.w.opts['distance'] = 1e6
         self.w.setWindowTitle('Planetary viewer')
@@ -23,7 +23,7 @@ class Visualizer:
 
     def start(self) -> None:
         if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-            QtGui.QApplication.instance().exec_()
+            self.app.instance().exec_()
 
     def make_mesh(self, planet: Body) -> gl.GLMeshItem:
         radius = planet.radius * Visualizer.scale
@@ -43,8 +43,8 @@ class Visualizer:
             planet_gl.translate(*(path[-1]))
             self.w.addItem(planet_gl)
 
-            text = pg.TextItem(text='Hello')
-            self.w.addItem(text)
+            # text = pg.TextItem(text='Hello')
+            # self.w.addItem(text)
 
     def set_update_rate_and_feed(self, rate, queue, lock) -> None:
         self.rate = rate
@@ -58,8 +58,11 @@ class Visualizer:
     def update(self):
         data = self.queue.get()
         
+        print(f"Visualiser tries acquire {self.lock}")
         self.lock.acquire()
+        print(f"Visualiser acquire {self.lock}")
         for planet in data:
+            print(f"Visualiser planet {planet}")
             path = planet.get_path() * Visualizer.scale
             path = path[~np.all(path == 0, axis=1)] # TODO: race condition here ?
             if path.size == 0:
@@ -78,11 +81,12 @@ class Visualizer:
             self.graphmap[planet.name]["planet_gl"].resetTransform()
             self.graphmap[planet.name]["planet_gl"].translate(*(path[-1]))
         self.lock.release()
+        print("Visualiser release")
 
 
 class Visualizer2D:
     def __init__(self) -> None:
-        self.app = QtGui.QApplication(sys.argv)
+        self.app = QtWidgets.QApplication(sys.argv)
         self.w = pg.GraphicsLayoutWidget(show=True, title="Planetary")
         self.w.show()
 
@@ -99,7 +103,7 @@ class Visualizer2D:
 
     def start(self) -> None:
         if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-            QtGui.QApplication.instance().exec_()
+            self.app.instance().exec_()
         
     def plot(self, planets) -> None:
         for planet in planets:

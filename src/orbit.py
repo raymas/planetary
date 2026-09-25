@@ -53,9 +53,11 @@ class Orbit:
         v = np.arctan2(yh, xh)
         r = np.sqrt(xh*xh + yh*yh)
 
-        xecl = r * ( np.cos(o) * np.cos(v + W) - np.sin(o) * np.sin(v+W) * np.cos(I) )
-        yecl = r * ( np.sin(o) * np.cos(v+W) + np.cos(o) * np.sin(v+W) * np.cos(I) )
-        zecl = r * ( np.sin(v+W) * np.sin(I) )
+        # Rotation from the orbital plane to the ecliptic (JPL approx_pos):
+        # node W, argument of perihelion o = w - W, in-plane angle v + o.
+        xecl = r * ( np.cos(W) * np.cos(v + o) - np.sin(W) * np.sin(v + o) * np.cos(I) )
+        yecl = r * ( np.sin(W) * np.cos(v + o) + np.cos(W) * np.sin(v + o) * np.cos(I) )
+        zecl = r * ( np.sin(v + o) * np.sin(I) )
 
         # J2000 frame
         # eps = np.rad2deg(23.43928)
