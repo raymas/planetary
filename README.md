@@ -16,6 +16,7 @@ implementation and cross-validation oracle.
 ├── kernels/                    # SPICE kernels (gitignored, see below)
 ├── scripts/
 │   ├── fetch_kernels.sh        # Downloads the required SPICE kernels
+│   ├── fetch_cspice.sh
 │   └── dump_reference_positions.py  # Regenerates the cross-validation fixture
 ├── src/                        # Python reference implementation
 ├── tests/                      # Python tests
@@ -58,6 +59,7 @@ implementation and cross-validation oracle.
 
 ```bash
 scripts/fetch_kernels.sh
+scripts/fetch_cspice.sh
 cd app/ui && npm install
 npm run tauri dev
 ```
